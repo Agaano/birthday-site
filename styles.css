@@ -1,0 +1,2475 @@
+/* ===== База ===== */
+:root {
+  /* Светлая тёплая палитра под картину: пергамент, дерево, бронза */
+  --bg: #e8ddcc;        /* тёплый пергамент */
+  --bg-soft: #f2eadc;   /* карточки и светлые блоки */
+  --cube: #d6c6b0;      /* дерево / камень в свете */
+  --cube-edge: #bda98f;
+  --cube-deep: #c9b79f;
+  --text: #2b211a;      /* тёмное дерево */
+  --text-muted: #6c5a49;
+  --text-faint: #99866f;
+  --accent: #8b5e2f;    /* бронза */
+  --line: #d7c8b4;
+  --maxw: 1080px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  overflow-x: clip;
+  color-scheme: light;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Segoe UI", system-ui, -apple-system, Roboto, "Helvetica Neue", Arial, sans-serif;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  overflow-x: clip;
+}
+
+::selection {
+  background: #b08a5f;
+  color: #fff8ee;
+}
+
+img {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* ===== Hero ===== */
+.hero {
+  position: relative;
+  z-index: 32; /* картина выше фоновых декораций, чтобы они на неё не попадали */
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(28px, 5vh, 48px);
+  padding: clamp(72px, 10vh, 110px) 24px clamp(80px, 12vh, 130px);
+  overflow: hidden;
+}
+
+/* Фото целиком, без обрезки ни на одном разрешении */
+.hero__frame {
+  position: relative;
+  flex: none;
+  max-width: 100%;
+  max-height: 58svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--line);
+  background: var(--bg-soft);
+  overflow: hidden;
+}
+
+.hero__media {
+  position: relative;
+  display: block;
+  width: min(100%, 116svh); /* 58svh * соотношение сторон 1774 / 887 */
+  aspect-ratio: 1774 / 887;
+  margin: 0 auto;
+  line-height: 0;
+  font-size: 0;
+}
+
+.hero__img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Перетаскиваемая свеча.
+   Живёт на отдельном слое поверх страницы, стартует на торте,
+   а во время перетаскивания прячется и уступает место курсору-руке. */
+.candle-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 0;
+  z-index: 50;
+  pointer-events: none;
+}
+
+.hero__candle {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 25px;
+  height: 113px;
+  background: url("assets/candle/candle.png") center / contain no-repeat;
+  filter: drop-shadow(0 10px 12px rgba(43, 33, 26, 0.45));
+  pointer-events: auto;
+  touch-action: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  visibility: hidden;
+  transition: filter 0.2s ease;
+}
+
+.hero__candle.is-ready {
+  visibility: visible;
+}
+
+.hero__candle:hover {
+  filter: drop-shadow(0 0 12px rgba(201, 162, 39, 0.5)) brightness(1.06);
+}
+
+.hero__candle.is-dragging {
+  opacity: 0;
+}
+
+/* Увеличиваем зону захвата вокруг тонкой свечи. */
+.hero__candle::before {
+  content: "";
+  position: absolute;
+  inset: -14px;
+}
+
+/* Пока тянем мышью или пером, вместо свечи — курсор-рука со свечой. */
+html.is-candle-dragging,
+html.is-candle-dragging * {
+  cursor: url("assets/candle/candle-cursor-glowing.png") 64 64, grabbing !important;
+}
+
+.hero__content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  max-width: 56ch;
+}
+
+.hero__eyebrow {
+  font-size: 0.72rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 14px;
+}
+
+.hero__title {
+  font-size: clamp(1.7rem, 3.8vw, 2.7rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.08;
+  margin-bottom: 18px;
+}
+
+.hero__sub {
+  font-size: clamp(0.92rem, 1.3vw, 1.02rem);
+  color: var(--text-muted);
+}
+
+.hero__scroll {
+  position: absolute;
+  left: 50%;
+  bottom: 28px;
+  transform: translateX(-50%);
+  z-index: 2;
+  width: 1px;
+  height: 56px;
+  background: var(--line);
+  overflow: hidden;
+}
+
+.hero__scroll-line {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1px;
+  height: 24px;
+  background: var(--text-faint);
+  animation: scroll-hint 2.6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes scroll-hint {
+  0%   { transform: translateY(-24px); }
+  55%  { transform: translateY(56px); }
+  100% { transform: translateY(56px); }
+}
+
+/* ===== Секции ===== */
+.section {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 120px 24px;
+}
+
+.section__head {
+  max-width: 56ch;
+  margin-bottom: 72px;
+}
+
+.section__title {
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin-bottom: 12px;
+}
+
+.section__lead {
+  color: var(--text-muted);
+}
+
+/* ===== Кубы-заглушки =====
+   Внешний блок — неподвижное «окно» с рамкой, внутри двигается слой.
+   Поэтому эффекты не задевают подписи и текст. */
+.stat__cube,
+.tl-event__media,
+.moment {
+  position: relative;
+  overflow: hidden;
+  background: var(--bg-soft);
+  border: 1px solid var(--cube-edge);
+  border-bottom-color: var(--cube-deep);
+}
+
+.stat__cube-inner,
+.tl-event__media-inner,
+.moment__cube {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -120px;
+  bottom: -120px;
+  background: var(--cube);
+}
+
+[data-fx] {
+  will-change: transform, opacity;
+}
+
+/* ===== Статистика ===== */
+.stats {
+  background: var(--bg-soft);
+  max-width: none;
+  padding-left: max(24px, calc((100vw - var(--maxw)) / 2));
+  padding-right: max(24px, calc((100vw - var(--maxw)) / 2));
+}
+
+.stats__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+/* Карточки статистики */
+.stat-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 190px;
+  padding: 22px 24px 20px;
+  border: 1px solid var(--line);
+  background: linear-gradient(180deg, rgba(255, 253, 247, 0.6), rgba(214, 198, 178, 0.24));
+  transition: border-color 0.25s ease, background 0.25s ease;
+}
+
+.stat-card:hover,
+.stat-card:focus-within {
+  border-color: var(--cube-edge);
+  z-index: 10;
+}
+
+.stat-card__top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.stat-card__value {
+  font-size: clamp(2.7rem, 4.4vw, 4rem);
+  font-weight: 600;
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+}
+
+.stat-card__info {
+  flex: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1px solid var(--cube-edge);
+  background: transparent;
+  color: var(--text-faint);
+  font: inherit;
+  font-size: 0.68rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.stat-card__info:hover,
+.stat-card__info:focus-visible {
+  border-color: var(--accent);
+  color: var(--accent);
+  outline: 1px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.stat-card__label {
+  margin-top: 18px;
+  max-width: 24ch;
+  font-size: 0.7rem;
+  line-height: 1.45;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.stat-card__tooltip {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 20;
+  width: min(280px, calc(100vw - 64px));
+  padding: 13px 15px;
+  border: 1px solid var(--accent);
+  background: #fbf6ec;
+  color: var(--text);
+  font-size: 0.82rem;
+  line-height: 1.5;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-4px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  box-shadow: 0 18px 40px -24px rgba(43, 33, 26, 0.4);
+}
+
+.stat-card__top:has(.stat-card__info:hover) ~ .stat-card__tooltip,
+.stat-card__top:has(.stat-card__info:focus) ~ .stat-card__tooltip {
+  opacity: 1;
+  pointer-events: auto;
+  transform: none;
+}
+
+/* Расшифровка под сеткой */
+.stats__notes {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: 24px 48px;
+  margin-top: 52px;
+  padding-top: 28px;
+  border-top: 1px solid var(--line);
+}
+
+.stats__notes-kicker {
+  margin-bottom: 8px;
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.stats__notes-lead {
+  max-width: 26ch;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.stats__notes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 24px;
+}
+
+.stats__notes-grid p {
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+
+.stats__notes-grid span {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 0.67rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text);
+}
+
+.stats__notes-foot {
+  grid-column: 2;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+  font-size: 0.78rem;
+  line-height: 1.5;
+  color: var(--text-faint);
+}
+
+/* Лексикон */
+.stats--words {
+  background: var(--bg);
+  border-top: 1px solid var(--line);
+}
+
+.stats__grid--words .stat-card {
+  min-height: 160px;
+}
+
+.stat-card--top {
+  border-color: var(--accent);
+  background: linear-gradient(180deg, rgba(176, 138, 95, 0.24), rgba(255, 251, 244, 0.4));
+  box-shadow: inset 0 0 0 1px rgba(139, 94, 47, 0.16);
+}
+
+.stat-card--top .stat-card__value {
+  color: var(--accent);
+}
+
+.stat-card__badge {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  padding: 4px 8px;
+  border: 1px solid rgba(176, 138, 95, 0.45);
+  border-radius: 999px;
+  font-size: 0.58rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.stats__words-summary {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 28px;
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+}
+
+.stats__words-line {
+  max-width: 44ch;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+
+.stats__words-line strong {
+  font-weight: 600;
+  color: var(--text);
+}
+
+.stats__quote {
+  flex: 0 1 480px;
+  max-width: 480px;
+  margin: 0;
+  padding-left: 20px;
+  border-left: 2px solid var(--accent);
+  font-size: 1.05rem;
+  line-height: 1.5;
+  color: var(--text);
+}
+
+/* Дневник наблюдений */
+.almanac__panel {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 8px 28px;
+  border: 1px solid var(--line);
+  background: linear-gradient(180deg, rgba(255, 253, 247, 0.45), rgba(214, 198, 178, 0.2));
+}
+
+.almanac__item {
+  display: grid;
+  grid-template-columns: 120px minmax(0, 1fr);
+  align-items: start;
+  gap: 20px;
+  padding: 20px 0;
+  border-top: 1px solid var(--line);
+}
+
+.almanac__item:nth-child(1),
+.almanac__item:nth-child(2) {
+  border-top: none;
+}
+
+.almanac__item:nth-child(even) {
+  padding-left: 28px;
+  border-left: 1px solid var(--line);
+}
+
+.almanac__item:nth-child(odd) {
+  padding-right: 28px;
+}
+
+.almanac__value {
+  font-size: clamp(1.7rem, 2.6vw, 2.4rem);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+
+.almanac__value--time {
+  padding-top: 0.55em;
+  font-size: clamp(0.9rem, 1.3vw, 1.05rem);
+  line-height: 1.2;
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+
+.almanac__title {
+  margin-bottom: 5px;
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text);
+}
+
+.almanac__text {
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+
+@media (max-width: 760px) {
+  .stats__words-summary {
+    flex-direction: column;
+  }
+
+  .stats__quote {
+    flex: none;
+    max-width: none;
+  }
+
+  .almanac__panel {
+    grid-template-columns: 1fr;
+    padding: 4px 20px;
+  }
+
+  .almanac__item,
+  .almanac__item:nth-child(even),
+  .almanac__item:nth-child(odd) {
+    grid-template-columns: 100px minmax(0, 1fr);
+    gap: 16px;
+    padding: 18px 0;
+    border-left: none;
+  }
+
+  .almanac__item:nth-child(2) {
+    border-top: 1px solid var(--line);
+  }
+
+  .almanac__value {
+    font-size: 1.8rem;
+  }
+
+  .almanac__value--time {
+    font-size: 0.95rem;
+  }
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.stat__cube {
+  height: 150px;
+}
+
+.stat__cube--tall {
+  height: 210px;
+}
+
+.stat__value {
+  font-size: 1.9rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.stat__label {
+  font-size: 0.85rem;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+/* ===== Хронология =====
+   Одна непрерывная линия на все группы; события разной «яркости». */
+.timeline {
+  position: relative;
+}
+
+/* Замок — фоном на первом экране хронологии */
+.timeline::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 100vw;
+  height: 100vh;
+  transform: translateX(-50%);
+  background: url(assets/decor/decor-08.png) center top / cover no-repeat;
+  opacity: 0.08;
+  pointer-events: none;
+  z-index: 0;
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 72%, transparent 100%);
+  mask-image: linear-gradient(180deg, #000 0%, #000 72%, transparent 100%);
+}
+
+.timeline > * {
+  position: relative;
+  z-index: 1;
+}
+
+.timeline__list {
+  position: relative;
+}
+
+.timeline__legend {
+  margin: -44px 0 56px;
+  font-size: 0.8rem;
+  color: var(--text-faint);
+  letter-spacing: 0.04em;
+}
+
+.timeline__list::before {
+  content: "";
+  position: absolute;
+  left: 11px;
+  top: 10px;
+  bottom: 6px;
+  width: 1px;
+  background: var(--line);
+}
+
+.tl-group + .tl-group {
+  margin-top: 88px;
+}
+
+.tl-group__head,
+.tl-event {
+  position: relative;
+  padding-left: 44px;
+}
+
+.tl-group__head {
+  margin-bottom: 36px;
+}
+
+.tl-group__marker {
+  position: absolute;
+  left: 6px;
+  top: 4px;
+  width: 11px;
+  height: 11px;
+  background: var(--accent);
+  transform: rotate(45deg);
+}
+
+.tl-group__title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.tl-event {
+  --dot: 7px;
+}
+
+.tl-event + .tl-event {
+  margin-top: 40px;
+}
+
+.tl-event__dot {
+  position: absolute;
+  left: 11px;
+  top: 8px;
+  width: var(--dot);
+  height: var(--dot);
+  margin-left: calc(var(--dot) / -2 + 0.5px);
+  border-radius: 50%;
+  background: var(--text-faint);
+}
+
+/* Яркое событие: крупная точка, карточка с фото-плейсхолдером */
+.tl-event--major {
+  --dot: 11px;
+}
+
+.tl-event--major .tl-event__dot {
+  background: var(--accent);
+}
+
+.tl-event--major .tl-event__card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 260px;
+  gap: 28px;
+  align-items: start;
+  padding: 26px 28px;
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+}
+
+.tl-event--major .tl-event__title {
+  font-size: 1.3rem;
+  color: var(--text);
+}
+
+.tl-event--major .tl-event__date {
+  color: var(--accent);
+}
+
+/* Тусклое событие: мельче, приглушено */
+.tl-event--minor {
+  --dot: 5px;
+  opacity: 0.5;
+}
+
+.tl-event__body {
+  max-width: 58ch;
+}
+
+.tl-event__date {
+  font-size: 0.75rem;
+  color: var(--text-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  margin-bottom: 6px;
+}
+
+.tl-event__title {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.tl-event__text {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.tl-event__media {
+  aspect-ratio: 4 / 3;
+}
+
+/* Широкое фото (Китай) — пропорции как у снимка, ничего не обрезается */
+.tl-event__media--wide {
+  aspect-ratio: 1000 / 450;
+}
+
+.tl-event__media--wide .tl-event__photo {
+  object-fit: contain;
+  object-position: center;
+}
+
+.tl-event__photo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: left center;
+}
+
+/* ===== Альбом ===== */
+.moments__grid {
+  columns: 4;
+  column-gap: 20px;
+}
+
+.moment {
+  margin: 0 0 20px;
+  break-inside: avoid;
+}
+
+.moment img {
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: filter 0.3s ease;
+}
+
+.moment:hover img {
+  filter: brightness(1.04);
+}
+
+/* ===== Над сайтом работали ===== */
+.team {
+  border-top: 1px solid var(--line);
+}
+
+.team__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.team-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.team__photo {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 4 / 5;
+  margin-bottom: 18px;
+  overflow: hidden;
+  border: 1px dashed var(--cube-edge);
+  background: linear-gradient(160deg, var(--bg-soft) 0%, var(--cube) 100%);
+  transition: border-color 0.25s ease;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.team-card:hover .team__photo {
+  border-color: var(--accent);
+}
+
+.team__photo span {
+  font-size: clamp(2.4rem, 4vw, 3.4rem);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--accent);
+  opacity: 0.7;
+}
+
+.team__name {
+  margin-bottom: 4px;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.team__role {
+  margin-bottom: 10px;
+  font-size: 0.66rem;
+  line-height: 1.45;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.team__text {
+  font-size: 0.85rem;
+  line-height: 1.55;
+  color: var(--text-muted);
+}
+
+@media (max-width: 900px) {
+  .team__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 520px) {
+  .team__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ===== Финал ===== */
+.finale {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 140px 24px;
+  border-top: 1px solid var(--line);
+  overflow: hidden;
+}
+
+/* Картина на фоне финала — на весь экран */
+.finale::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url(assets/decor/decor-10.png) center / cover no-repeat;
+  opacity: 0.09;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.finale__angels {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.finale__angel {
+  position: absolute;
+  top: 50%;
+  width: clamp(90px, 8vw, 120px);
+  height: auto;
+  transform: translateY(-50%);
+  filter: drop-shadow(0 10px 18px rgba(43, 33, 26, 0.25));
+  pointer-events: auto;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: filter 0.25s ease;
+}
+
+.finale__angel:hover {
+  filter: drop-shadow(0 0 16px rgba(201, 162, 39, 0.55)) brightness(1.08);
+}
+
+.finale__angel:focus-visible {
+  outline: 1px solid var(--accent);
+  outline-offset: 8px;
+}
+
+@keyframes angel-hit {
+  0%   { transform: translateY(-50%) scale(1); }
+  35%  { transform: translateY(-50%) scale(1.16) rotate(4deg); }
+  70%  { transform: translateY(-50%) scale(0.96) rotate(-2deg); }
+  100% { transform: translateY(-50%) scale(1); }
+}
+
+.finale__angel.is-hit {
+  animation: angel-hit 0.28s ease-out;
+}
+
+@keyframes angel-death {
+  0%   { opacity: 1; transform: translateY(-50%) scale(1); filter: blur(0); }
+  30%  { opacity: 0.9; transform: translateY(-50%) scale(1.1) rotate(-4deg); }
+  100% { opacity: 0; transform: translateY(-20%) scale(0.4) rotate(10deg); filter: blur(2px); }
+}
+
+.finale__angel.is-dead {
+  animation: angel-death 0.7s ease-in forwards;
+  pointer-events: none;
+}
+
+.finale__angel--left {
+  left: max(16px, calc(50% - 560px));
+}
+
+.finale__angel--right {
+  right: max(16px, calc(50% - 560px));
+}
+
+@media (max-width: 1100px) {
+  .finale__angel {
+    width: 90px;
+  }
+}
+
+@media (max-width: 900px) {
+  .finale__angel {
+    top: 18%;
+    width: 62px;
+  }
+
+  .finale__angel--left {
+    left: 12px;
+  }
+
+  .finale__angel--right {
+    right: 12px;
+  }
+}
+
+.finale__inner {
+  position: relative;
+  z-index: 2;
+  max-width: 720px;
+}
+
+.finale__eyebrow {
+  font-size: 0.8rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 16px;
+}
+
+.finale__title {
+  font-size: clamp(2.6rem, 7vw, 5rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+}
+
+.finale__sub {
+  max-width: 44ch;
+  margin: 20px auto 38px;
+  color: var(--text-muted);
+}
+
+.finale__btn {
+  appearance: none;
+  background: transparent;
+  border: 1px solid var(--cube-edge);
+  color: var(--text);
+  padding: 15px 34px;
+  font: inherit;
+  font-size: 0.85rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: border-color 0.25s ease, color 0.25s ease;
+}
+
+.finale__btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.finale__btn:active {
+  transform: translateY(1px);
+}
+
+.finale__btn:focus-visible {
+  outline: 1px solid var(--accent);
+  outline-offset: 4px;
+}
+
+/* Холст конфетти: поверх страницы, клики не перехватывает */
+.confetti {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 60;
+}
+
+/* ===== Летающие существа =====
+   Плейсхолдеры: .creature__art позже заменяется на картинку
+   (img или background-image), логика полёта и кликов не меняется. */
+.creature-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 0; /* фактическая высота документа ставится из JS */
+  z-index: 40;
+  pointer-events: none;
+}
+
+.creature {
+  position: absolute;
+  left: 0;
+  width: 120px;
+  height: 84px;
+  pointer-events: auto;
+  cursor: pointer;
+  will-change: transform;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.creature__bob {
+  width: 100%;
+  height: 100%;
+  animation: creature-bob 3.2s ease-in-out infinite;
+  animation-delay: var(--bob-delay, 0s);
+}
+
+/* Пока страница скроллится — существо летит по горизонтали,
+   покачивание выключено. Скролл остановился — включается «полёт». */
+.creature-layer.is-moving .creature__bob {
+  animation: none;
+}
+
+.creature__art {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  filter: drop-shadow(0 16px 18px rgba(0, 0, 0, 0.55));
+  transform-origin: 50% 60%;
+  transition: filter 0.25s ease;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.creature:hover .creature__art {
+  filter: drop-shadow(0 0 14px rgba(176, 138, 95, 0.35)) brightness(1.08);
+}
+
+.creature:focus-visible {
+  outline: none;
+}
+
+.creature:focus-visible .creature__art {
+  outline: 1px solid var(--accent);
+  outline-offset: 6px;
+}
+
+@keyframes creature-bob {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-14px) rotate(1.2deg); }
+}
+
+@keyframes creature-hit {
+  0%   { transform: scale(1); }
+  35%  { transform: scale(1.16) rotate(4deg); }
+  70%  { transform: scale(0.96); }
+  100% { transform: scale(1); }
+}
+
+.creature__art.is-hit {
+  animation: creature-hit 0.28s ease-out;
+}
+
+@keyframes creature-death {
+  0%   { opacity: 1; transform: scale(1); filter: blur(0); }
+  100% { opacity: 0; transform: scale(0.35) translateY(18px); filter: blur(2px); }
+}
+
+.creature.is-dead .creature__bob {
+  animation: none;
+}
+
+.creature.is-dead .creature__art {
+  animation: creature-death 0.45s ease-in forwards;
+}
+
+@media (max-width: 520px) {
+  .creature {
+    width: 96px;
+    height: 68px;
+  }
+}
+
+/* ===== Грибы внизу документа =====
+   Плейсхолдеры: .shroom__cap / .shroom__stem позже заменяются
+   на картинку, логика кликов не меняется. */
+.shroom-layer {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 120px;
+  z-index: 45;
+  pointer-events: none;
+  overflow: hidden; /* грибы «выходят из земли», не удлиняя документ */
+}
+
+.shroom {
+  position: absolute;
+  bottom: 0;
+  width: 76px;
+  height: 88px;
+  margin-left: -38px;
+  transform: scale(var(--s, 1));
+  transform-origin: bottom center;
+  pointer-events: auto;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.shroom__grow {
+  width: 100%;
+  height: 100%;
+  transform-origin: bottom center;
+}
+
+/* До появления в кадре грибы спрятаны в земле */
+.shroom-layer:not(.is-grown) .shroom__grow {
+  transform: translateY(18px) scale(0.8, 0.35);
+  opacity: 0;
+}
+
+.shroom-layer.is-grown .shroom__grow {
+  animation: shroom-grow 0.9s cubic-bezier(0.2, 0.8, 0.3, 1) both;
+  animation-delay: var(--grow-delay, 0s);
+}
+
+.shroom__art {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: bottom center;
+  filter: drop-shadow(0 12px 16px rgba(0, 0, 0, 0.5));
+  transform-origin: 50% 85%;
+  transition: filter 0.25s ease;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.shroom:hover .shroom__art {
+  filter: drop-shadow(0 0 12px rgba(224, 90, 74, 0.4)) brightness(1.08);
+}
+
+.shroom:focus-visible {
+  outline: none;
+}
+
+.shroom:focus-visible .shroom__art {
+  outline: 1px solid var(--accent);
+  outline-offset: 4px;
+}
+
+@keyframes shroom-grow {
+  0%   { transform: translateY(18px) scale(0.8, 0.35); opacity: 0; }
+  60%  { opacity: 1; }
+  100% { transform: none; opacity: 1; }
+}
+
+.shroom__art.is-hit {
+  animation: creature-hit 0.28s ease-out;
+}
+
+.shroom.is-dead .shroom__grow {
+  animation: none;
+}
+
+.shroom.is-dead .shroom__art {
+  animation: creature-death 0.45s ease-in forwards;
+}
+
+@media (max-width: 520px) {
+  .shroom {
+    width: 60px;
+    height: 72px;
+    margin-left: -30px;
+  }
+}
+
+/* ===== Крылатые грибы над обычными ===== */
+.winged-layer {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 230px;
+  z-index: 47;
+  pointer-events: none;
+}
+
+.winged {
+  position: absolute;
+  width: 72px;
+  height: 92px;
+  margin-left: -36px;
+  transform: scale(var(--s, 1));
+  transform-origin: bottom center;
+  pointer-events: auto;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.winged__bob {
+  width: 100%;
+  height: 100%;
+  animation: winged-float 3.6s ease-in-out infinite;
+  animation-delay: var(--float-delay, 0s);
+}
+
+.winged__art {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center bottom;
+  filter: drop-shadow(0 14px 18px rgba(0, 0, 0, 0.45));
+  transform-origin: 50% 60%;
+  transition: filter 0.25s ease;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.winged:hover .winged__art {
+  filter: drop-shadow(0 0 12px rgba(224, 90, 74, 0.4)) brightness(1.08);
+}
+
+.winged:focus-visible {
+  outline: none;
+}
+
+.winged:focus-visible .winged__art {
+  outline: 1px solid var(--accent);
+  outline-offset: 4px;
+}
+
+@keyframes winged-float {
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  50%      { transform: translateY(-12px) rotate(2deg); }
+}
+
+.winged__art.is-hit {
+  animation: creature-hit 0.28s ease-out;
+}
+
+.winged.is-dead .winged__bob {
+  animation: none;
+}
+
+.winged.is-dead .winged__art {
+  animation: creature-death 0.45s ease-in forwards;
+}
+
+/* ===== Цветы рядом с грибами ===== */
+.flower-layer {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 120px;
+  z-index: 46;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.flower {
+  position: absolute;
+  bottom: 0;
+  width: 54px;
+  height: 80px;
+  margin-left: -27px;
+  transform: scale(var(--s, 1));
+  transform-origin: bottom center;
+  pointer-events: auto;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.flower__bob {
+  width: 100%;
+  height: 100%;
+  transform-origin: bottom center;
+  animation: flower-sway 4.4s ease-in-out infinite;
+  animation-delay: var(--sway-delay, 0s);
+}
+
+.flower__art {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-origin: 50% 100%;
+}
+
+.flower__stem {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 3px;
+  height: 34px;
+  margin-left: -1.5px;
+  border-radius: 2px;
+  background: linear-gradient(180deg, #4f5a3a 0%, #39412a 100%);
+}
+
+.flower__head-img {
+  position: absolute;
+  left: 50%;
+  bottom: 30px;
+  width: 48px;
+  height: 48px;
+  margin-left: -24px;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 10px rgba(0, 0, 0, 0.35));
+  transition: filter 0.25s ease;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.flower__plant-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: bottom center;
+  filter: drop-shadow(0 8px 10px rgba(0, 0, 0, 0.35));
+  transition: filter 0.25s ease;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.flower:hover .flower__head-img,
+.flower:hover .flower__plant-img {
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.35)) brightness(1.08);
+}
+
+.flower:focus-visible {
+  outline: none;
+}
+
+.flower:focus-visible .flower__art {
+  outline: 1px solid var(--accent);
+  outline-offset: 4px;
+}
+
+@keyframes flower-sway {
+  0%, 100% { transform: rotate(-2deg); }
+  50%      { transform: rotate(2deg); }
+}
+
+@keyframes flower-pop {
+  0%   { transform: scale(1); opacity: 1; }
+  45%  { transform: scale(1.14); }
+  100% { transform: scale(0.2); opacity: 0; }
+}
+
+.flower.is-dead .flower__bob {
+  animation: none;
+}
+
+.flower.is-dead .flower__art {
+  animation: flower-pop 0.4s ease-out forwards;
+}
+
+@media (max-width: 520px) {
+  .winged {
+    width: 62px;
+    height: 80px;
+    margin-left: -31px;
+  }
+
+  .flower {
+    width: 46px;
+    height: 72px;
+    margin-left: -23px;
+  }
+
+  .flower__stem {
+    height: 30px;
+  }
+
+  .flower__head-img {
+    bottom: 28px;
+    width: 38px;
+    height: 38px;
+    margin-left: -19px;
+  }
+}
+
+/* ===== Декор из дополнительных ассетов ===== */
+.decor-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 0; /* ставится из JS */
+  z-index: 30;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.decor-watermark {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  max-width: 70vw;
+  height: auto;
+  mix-blend-mode: multiply;
+  filter: invert(1) grayscale(1);
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.decor-float {
+  position: absolute;
+  transform: translate(-50%, -50%) rotate(var(--r, 0deg));
+  pointer-events: none;
+}
+
+.decor-float img {
+  display: block;
+  height: auto;
+  max-width: 16vw;
+  mix-blend-mode: multiply;
+  filter: invert(1) grayscale(1);
+  animation: decor-drift var(--t, 10s) ease-in-out infinite alternate;
+  animation-delay: var(--d, 0s);
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+@keyframes decor-drift {
+  from { transform: translateY(-7px); }
+  to   { transform: translateY(7px); }
+}
+
+/* Разделители между секциями */
+.decor-divider {
+  width: 100%;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 26px 24px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.decor-divider__line {
+  flex: 1 1 auto;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, var(--line) 100%);
+}
+
+.decor-divider__line--right {
+  background: linear-gradient(90deg, var(--line) 0%, transparent 100%);
+}
+
+.decor-divider__img {
+  display: block;
+  height: 68px;
+  width: auto;
+  max-width: 220px;
+  object-fit: contain;
+  opacity: 0.65;
+  mix-blend-mode: multiply;
+  filter: invert(1) grayscale(1);
+}
+
+/* Широкая полоса-разделитель из повторяющегося мотива */
+.decor-divider--band {
+  height: 62px;
+  padding: 0 24px;
+  background-repeat: repeat-x;
+  background-position: center;
+  background-size: auto 62px;
+  opacity: 0.35;
+  mix-blend-mode: screen;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 14%, #000 86%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0%, #000 14%, #000 86%, transparent 100%);
+}
+
+@media (max-width: 520px) {
+  .decor-divider {
+    padding: 20px 24px;
+    gap: 16px;
+  }
+
+  .decor-divider__img {
+    height: 52px;
+  }
+
+  .decor-divider--band {
+    height: 48px;
+    background-size: auto 48px;
+  }
+}
+
+/* ===== Вертикальные орнаментальные ленты по краям документа =====
+   Настоящий вертикальный книжный бордюр (гротеск), public domain,
+   Wikimedia Commons: «Grotesque border segment (left)…», 17 в. */
+.doc-rail {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 28px;
+  background: linear-gradient(
+    180deg,
+    rgba(122, 91, 53, 0) 0%,
+    rgba(122, 91, 53, 0.8) 4%,
+    rgba(122, 91, 53, 0.8) 96%,
+    rgba(122, 91, 53, 0) 100%
+  );
+  -webkit-mask-image: url(assets/ornaments/celtic-vertical.png);
+  -webkit-mask-repeat: repeat-y;
+  -webkit-mask-position: left top;
+  -webkit-mask-size: 100% auto;
+  mask-image: url(assets/ornaments/celtic-vertical.png);
+  mask-repeat: repeat-y;
+  mask-position: left top;
+  mask-size: 100% auto;
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+.doc-rail--left {
+  left: 18px;
+}
+
+.doc-rail--right {
+  right: 18px;
+}
+
+@media (max-width: 760px) {
+  .doc-rail {
+    width: 15px;
+    opacity: 0.2;
+  }
+
+  .doc-rail--left {
+    left: 12px;
+  }
+
+  .doc-rail--right {
+    right: 12px;
+  }
+}
+
+/* Крестики по краям документа */
+.edge-cross {
+  position: absolute;
+  height: auto;
+  transform: translateY(-50%);
+  pointer-events: none;
+  filter: drop-shadow(0 2px 4px rgba(43, 33, 26, 0.18));
+}
+
+/* Два крестика, всегда видимых по краям экрана */
+.screen-crosses {
+  position: fixed;
+  inset: 0;
+  z-index: 34;
+  pointer-events: none;
+}
+
+.screen-cross {
+  position: absolute;
+  top: 50%;
+  width: 30px;
+  height: auto;
+  transform: translateY(-50%);
+  opacity: 0.72;
+  filter: drop-shadow(0 3px 6px rgba(43, 33, 26, 0.22));
+}
+
+.screen-cross--left {
+  left: 8px;
+}
+
+.screen-cross--right {
+  right: 8px;
+}
+
+@media (max-width: 700px) {
+  .screen-cross {
+    width: 20px;
+    opacity: 0.55;
+  }
+
+  .screen-cross--left {
+    left: 4px;
+  }
+
+  .screen-cross--right {
+    right: 4px;
+  }
+}
+
+/* Крестик у главного события */
+.tl-event__cross {
+  display: inline-block;
+  width: 13px;
+  height: auto;
+  margin-right: 7px;
+  vertical-align: -2px;
+  opacity: 0.85;
+}
+
+@media (max-width: 700px) {
+  .edge-cross {
+    display: none;
+  }
+}
+
+/* ===== Орнаментальная рамка по краям экрана =====
+   Угловой завиток: publicdomainvectors.org, CC0 (Openclipart). */
+.page-frame {
+  position: fixed;
+  inset: 0;
+  z-index: 55;
+  pointer-events: none;
+}
+
+.page-frame::before,
+.page-frame::after {
+  content: "";
+  position: absolute;
+  border: 1px solid rgba(122, 91, 53, 0.3);
+  pointer-events: none;
+}
+
+.page-frame::before {
+  inset: 10px;
+}
+
+.page-frame::after {
+  inset: 17px;
+  border-color: rgba(122, 91, 53, 0.15);
+}
+
+.page-frame__corner {
+  position: absolute;
+  width: clamp(92px, 12vw, 180px);
+  height: clamp(92px, 12vw, 180px);
+  background: linear-gradient(135deg, #ddc291 0%, #b08a5f 55%, #7c5f37 100%);
+  -webkit-mask-image: url(assets/ornaments/corner-swirl.svg);
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: contain;
+  mask-image: url(assets/ornaments/corner-swirl.svg);
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.page-frame__corner--bl {
+  left: 0;
+  bottom: 0;
+}
+
+.page-frame__corner--br {
+  right: 0;
+  bottom: 0;
+  transform: scaleX(-1);
+}
+
+.page-frame__corner--tl {
+  left: 0;
+  top: 0;
+  transform: scaleY(-1);
+}
+
+.page-frame__corner--tr {
+  right: 0;
+  top: 0;
+  transform: scale(-1, -1);
+}
+
+@media (max-width: 520px) {
+  .page-frame::before {
+    inset: 6px;
+  }
+
+  .page-frame::after {
+    inset: 11px;
+  }
+
+  .page-frame__corner {
+    width: 78px;
+    height: 78px;
+    opacity: 0.42;
+  }
+}
+
+/* ===== Кнопка «Закончить» ===== */
+.finish {
+  position: relative;
+  padding: 0 24px 120px;
+  text-align: center;
+}
+
+.finish__btn {
+  min-width: 220px;
+}
+
+/* ===== Ачивки ===== */
+.achievements {
+  border-top: 1px solid var(--line);
+  padding-bottom: 96px;
+}
+
+.achievements__bar {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 18px 40px;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--line);
+}
+
+.achievements__count {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  font-size: 0.66rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.achievements__count strong {
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+
+.achievements__hint {
+  font-size: 0.8rem;
+  color: var(--text-faint);
+}
+
+.achievements__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.achievement {
+  position: relative;
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  align-items: start;
+  gap: 22px;
+  min-height: 172px;
+  padding: 26px 28px;
+  border: 1px solid var(--line);
+  background: linear-gradient(180deg, rgba(255, 253, 247, 0.55), rgba(214, 198, 178, 0.2));
+  overflow: hidden;
+  transition: border-color 0.35s ease, background 0.35s ease, box-shadow 0.35s ease;
+}
+
+.achievement.is-unlocked {
+  border-color: var(--accent);
+  background: linear-gradient(180deg, rgba(255, 250, 235, 0.95), rgba(214, 186, 132, 0.3));
+  box-shadow: 0 30px 60px -48px rgba(43, 33, 26, 0.8);
+}
+
+/* Световой блик при открытии */
+.achievement::before {
+  content: "";
+  position: absolute;
+  top: -60%;
+  left: -40%;
+  width: 45%;
+  height: 220%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.55), transparent);
+  transform: rotate(18deg) translateX(-160%);
+  pointer-events: none;
+}
+
+.achievement.is-fresh::before {
+  animation: achievement-shine 0.9s ease-out;
+}
+
+@keyframes achievement-shine {
+  0%   { transform: rotate(18deg) translateX(-160%); }
+  100% { transform: rotate(18deg) translateX(420%); }
+}
+
+@keyframes achievement-pop {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.015); }
+  100% { transform: scale(1); }
+}
+
+.achievement.is-fresh {
+  animation: achievement-pop 0.6s ease-out;
+}
+
+.achievement__badge {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: radial-gradient(circle at 32% 24%, #fffdf7, var(--cube));
+  color: var(--text-faint);
+  font-size: 1.8rem;
+  line-height: 1;
+  filter: grayscale(1);
+  opacity: 0.55;
+  transition: color 0.35s ease, border-color 0.35s ease, filter 0.35s ease,
+    opacity 0.35s ease, box-shadow 0.35s ease;
+}
+
+.achievement.is-unlocked .achievement__badge {
+  border-color: var(--accent);
+  color: var(--accent);
+  filter: none;
+  opacity: 1;
+  box-shadow: 0 0 0 6px rgba(139, 94, 47, 0.08), 0 0 30px rgba(201, 162, 39, 0.28);
+}
+
+.achievement__badge-img {
+  display: block;
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 6px rgba(43, 33, 26, 0.18));
+}
+
+.achievement.is-failed {
+  border-color: rgba(138, 74, 63, 0.45);
+  background: linear-gradient(180deg, rgba(255, 248, 243, 0.62), rgba(138, 74, 63, 0.07));
+}
+
+.achievement.is-failed .achievement__kicker,
+.achievement.is-failed .achievement__state {
+  color: #8a4a3f;
+}
+
+.achievement.is-failed .achievement__progress-fill {
+  background: #8a4a3f;
+}
+
+.achievement.is-failed .achievement__badge {
+  filter: grayscale(1);
+  opacity: 0.42;
+}
+
+/* Скрытые ачивки: чистый чёрный и случайная картинка сверху */
+.achievement:not(.is-unlocked) {
+  background: #000;
+  border-color: #000;
+}
+
+.achievement:not(.is-unlocked) .achievement__body,
+.achievement:not(.is-unlocked) .achievement__badge,
+.achievement:not(.is-unlocked) .achievement__state {
+  visibility: hidden;
+}
+
+.achievement__veil {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: grid;
+  place-items: center;
+  background: #000;
+  opacity: 1;
+  pointer-events: none;
+  transition: opacity 0.45s ease;
+}
+
+.achievement.is-unlocked .achievement__veil {
+  opacity: 0;
+}
+
+.achievement__veil-img {
+  display: block;
+  width: auto;
+  max-width: 72%;
+  max-height: 72%;
+  object-fit: contain;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.achievement__veil--eye .achievement__veil-img {
+  width: min(64%, 260px);
+  filter: invert(1);
+}
+
+.achievement__veil--strip .achievement__veil-img {
+  width: min(80%, 360px);
+}
+
+.achievement__badge-check {
+  position: absolute;
+  right: -3px;
+  bottom: -3px;
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff8ee;
+  font-size: 0.7rem;
+  line-height: 1;
+  opacity: 0;
+  transform: scale(0.4);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.achievement.is-unlocked .achievement__badge-check {
+  opacity: 1;
+  transform: none;
+}
+
+.achievement__kicker {
+  margin-bottom: 6px;
+  font-size: 0.62rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  transition: color 0.35s ease;
+}
+
+.achievement.is-unlocked .achievement__kicker {
+  color: var(--accent);
+}
+
+.achievement__title {
+  margin-bottom: 8px;
+  font-size: 1.15rem;
+  font-weight: 600;
+}
+
+.achievement__text {
+  max-width: 42ch;
+  font-size: 0.84rem;
+  line-height: 1.55;
+  color: var(--text-muted);
+}
+
+.achievement__progress {
+  position: relative;
+  height: 2px;
+  margin-top: 18px;
+  background: var(--line);
+  overflow: hidden;
+}
+
+.achievement__progress-fill {
+  position: absolute;
+  inset: 0;
+  width: calc(var(--p, 0) * 100%);
+  background: var(--accent);
+  transition: width 0.45s ease;
+}
+
+.achievement__state {
+  position: absolute;
+  top: 24px;
+  right: 26px;
+  font-size: 0.6rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  font-variant-numeric: tabular-nums;
+  transition: color 0.35s ease;
+}
+
+.achievement.is-unlocked .achievement__state {
+  color: var(--accent);
+}
+
+/* ===== Экран ачивок ===== */
+.achievements-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(214, 186, 132, 0.25), transparent 60%),
+    var(--bg);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.3s ease, visibility 0s linear 0.3s;
+}
+
+.achievements-screen.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0.3s ease, visibility 0s linear 0s;
+}
+
+.achievements-screen:focus {
+  outline: none;
+}
+
+html.is-achievements-open,
+body.is-achievements-open {
+  overflow: hidden;
+}
+
+.achievements-screen__inner {
+  position: relative;
+  z-index: 1;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 100px 24px 110px;
+}
+
+.achievements-screen__x {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--cube-edge);
+  border-radius: 50%;
+  background: rgba(251, 246, 236, 0.86);
+  color: var(--text);
+  font: inherit;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.achievements-screen__x:hover,
+.achievements-screen__x:focus-visible {
+  border-color: var(--accent);
+  color: var(--accent);
+  outline: 1px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.achievements-screen__head {
+  max-width: 62ch;
+  margin-bottom: 56px;
+}
+
+.achievements-screen__eyebrow {
+  margin-bottom: 14px;
+  font-size: 0.8rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.achievements-screen__title {
+  margin-bottom: 16px;
+  font-size: clamp(2.2rem, 5vw, 3.6rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+}
+
+.achievements-screen__lead {
+  color: var(--text-muted);
+}
+
+.achievements-screen__count {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-top: 28px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+  font-size: 0.66rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.achievements-screen__count strong {
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+
+.achievements-screen__foot {
+  margin-top: 56px;
+  padding-top: 28px;
+  border-top: 1px solid var(--line);
+  text-align: center;
+}
+
+.achievements-screen__close {
+  min-width: 220px;
+}
+
+@media (max-width: 520px) {
+  .achievements-screen__inner {
+    padding: 76px 20px 80px;
+  }
+
+  .achievements-screen__head {
+    margin-bottom: 36px;
+  }
+
+  .achievements-screen__x {
+    top: 14px;
+    right: 14px;
+  }
+}
+
+@media (max-width: 900px) {
+  .achievements__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 520px) {
+  .achievement {
+    grid-template-columns: 52px minmax(0, 1fr);
+    gap: 16px;
+    padding: 22px 20px;
+  }
+
+  .achievement__badge {
+    width: 52px;
+    height: 52px;
+    font-size: 1.45rem;
+  }
+
+  .achievement__state {
+    top: 20px;
+    right: 20px;
+  }
+
+  .achievement__title {
+    padding-right: 58px;
+  }
+}
+
+/* ===== Футер ===== */
+.footer {
+  position: relative;
+  border-top: 1px solid var(--line);
+  padding: 56px 24px 230px; /* нижняя полоса — грибы, крылатые грибы и цветы */
+  text-align: center;
+}
+
+.footer__text {
+  font-size: 0.85rem;
+  color: var(--text-faint);
+  letter-spacing: 0.08em;
+}
+
+/* ===== Адаптив ===== */
+@media (min-width: 768px) {
+  /* Десктоп: фото от края до края, вплотную к верху; текст поверх нижней части */
+  .hero {
+    display: block;
+    min-height: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .hero__frame {
+    display: block;
+    width: 100%;
+    max-height: none;
+    border: none;
+    background: none;
+    overflow: hidden;
+  }
+
+  .hero__media {
+    width: 100%;
+  }
+
+  .hero__img {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: none;
+    /* низ картины растворяется в бежевом фоне */
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 78%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 0%, #000 78%, transparent 100%);
+  }
+
+  /* Мягкое затемнение низа фото под текст */
+  .hero::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: min(60%, 420px);
+    background: linear-gradient(
+      to top,
+      rgba(17, 14, 13, 0.86) 0%,
+      rgba(17, 14, 13, 0.48) 45%,
+      rgba(17, 14, 13, 0) 100%
+    );
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* Бежевая дымка поверх низа: прячет край картины и тёмного градиента */
+  .hero::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 170px;
+    background: linear-gradient(
+      to top,
+      var(--bg-soft) 0%,
+      rgba(242, 234, 220, 0) 100%
+    );
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .hero__content {
+    position: absolute;
+    left: 50%;
+    bottom: 140px;
+    transform: translateX(calc(-50% - clamp(0px, 2vw, 32px)));
+    width: 100%;
+    max-width: var(--maxw);
+    padding: 0 24px 40px;
+    text-align: left;
+    z-index: 3;
+  }
+
+  .hero__title {
+    max-width: 24ch;
+    color: #f5ece0;
+  }
+
+  .hero__sub {
+    max-width: 52ch;
+    color: #e0d2be;
+  }
+
+  .hero__eyebrow {
+    color: #d8b98b;
+  }
+
+  .hero__scroll {
+    display: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .stats__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+  }
+
+  .stats__notes {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .stats__notes-foot {
+    grid-column: auto;
+  }
+
+  .tl-event--major .tl-event__card {
+    grid-template-columns: 1fr;
+  }
+
+  .tl-event__media {
+    aspect-ratio: 16 / 9;
+  }
+
+  .tl-event__media--wide {
+    aspect-ratio: 1000 / 450;
+  }
+
+  .moments__grid {
+    columns: 2;
+  }
+}
+
+@media (max-width: 520px) {
+  .stats__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .timeline__list::before {
+    left: 7px;
+  }
+
+  .tl-group__head,
+  .tl-event {
+    padding-left: 34px;
+  }
+
+  .tl-group__marker {
+    left: 2px;
+  }
+
+  .tl-event__dot {
+    left: 7px;
+  }
+
+  .tl-event--major .tl-event__card {
+    padding: 20px;
+  }
+
+  .moments__grid {
+    columns: 1;
+  }
+}
+
+/* ===== Уважение к reduced motion ===== */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .hero__scroll-line {
+    animation: none;
+  }
+
+  [data-fx] {
+    transform: none !important;
+    opacity: 1 !important;
+    will-change: auto;
+  }
+
+  .creature__bob,
+  .creature__art.is-hit,
+  .creature.is-dead .creature__art,
+  .shroom__grow,
+  .shroom__art.is-hit,
+  .shroom.is-dead .shroom__art,
+  .winged__bob,
+  .winged__art.is-hit,
+  .winged.is-dead .winged__art,
+  .flower__bob,
+  .flower.is-dead .flower__art,
+  .finale__angel.is-hit,
+  .finale__angel.is-dead,
+  .achievement.is-fresh,
+  .achievement.is-fresh::before,
+  .decor-float img {
+    animation: none !important;
+  }
+
+  .creature.is-dead .creature__art,
+  .shroom.is-dead .shroom__art,
+  .flower.is-dead .flower__art,
+  .finale__angel.is-dead {
+    opacity: 0;
+  }
+
+  .achievement,
+  .achievement__badge,
+  .achievement__veil,
+  .achievements-screen {
+    transition: none !important;
+  }
+}
+
+/* ===== Курсоры ===== */
+html,
+body {
+  cursor: url("assets/cursors/default.png") 15 2, auto;
+}
+
+a,
+button,
+[role="button"],
+.creature,
+.shroom,
+.winged,
+.flower,
+.finale__angel,
+.stat-card__info,
+.finale__btn,
+.achievements-screen__x {
+  cursor: url("assets/cursors/pointer.png") 10 2, pointer;
+}

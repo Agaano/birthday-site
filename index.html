@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>С днём рождения, Володя</title>
+  <link rel="stylesheet" href="styles.css?v=20261109q">
+</head>
+<body>
+
+  <header class="hero">
+    <figure class="hero__frame">
+      <div class="hero__media">
+        <img class="hero__img" src="assets/hero.png" alt="Праздничный стол с героями года" width="1774" height="887">
+      </div>
+    </figure>
+    <div class="hero__content">
+      <p class="hero__eyebrow">7 ноября 2026 · уровень 19 закрыт</p>
+      <h1 class="hero__title">Год, в котором рождаются легенды</h1>
+      <p class="hero__sub">Китай, Сочи, РГИСИ, первый тур, диплом и ещё 12 000 сообщений. Небольшой сайт о большом годе.</p>
+    </div>
+    <div class="hero__scroll" aria-hidden="true">
+      <span class="hero__scroll-line"></span>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- Статистика -->
+    <section class="section stats">
+      <div class="section__head" data-fx="rise">
+        <h2 class="section__title">Год в цифрах</h2>
+        <p class="section__lead">Шесть чисел, которые описывают уровень 19 лучше любой хронологии. Наведи на вопросик — там подробности.</p>
+      </div>
+
+      <div class="stats__grid">
+        <div class="stat-card" data-fx="rise">
+          <div class="stat-card__top">
+            <span class="stat-card__value">12 000</span>
+            <button class="stat-card__info" type="button" aria-label="Пояснение" aria-describedby="stat-tip-1">?</button>
+          </div>
+          <p class="stat-card__label">сообщений в архиве</p>
+          <span class="stat-card__tooltip" id="stat-tip-1" role="tooltip">Столько сообщений сохранилось с 1 октября 2025 года. Всё, что было раньше, осталось в устных преданиях.</span>
+        </div>
+
+        <div class="stat-card" data-fx="rise">
+          <div class="stat-card__top">
+            <span class="stat-card__value">29</span>
+            <button class="stat-card__info" type="button" aria-label="Пояснение" aria-describedby="stat-tip-2">?</button>
+          </div>
+          <p class="stat-card__label">события в летописи</p>
+          <span class="stat-card__tooltip" id="stat-tip-2" role="tooltip">Столько записей осталось в хронологии: от первого «Привет, ты кто?» до закрытия уровня 19.</span>
+        </div>
+
+        <div class="stat-card" data-fx="rise">
+          <div class="stat-card__top">
+            <span class="stat-card__value">7,2</span>
+            <button class="stat-card__info" type="button" aria-label="Пояснение" aria-describedby="stat-tip-3">?</button>
+          </div>
+          <p class="stat-card__label">сообщения в день</p>
+          <span class="stat-card__tooltip" id="stat-tip-3" role="tooltip">Темп: в среднем 7,2 сообщения в день.</span>
+        </div>
+
+        <div class="stat-card" data-fx="rise">
+          <div class="stat-card__top">
+            <span class="stat-card__value">6+</span>
+            <button class="stat-card__info" type="button" aria-label="Пояснение" aria-describedby="stat-tip-4">?</button>
+          </div>
+          <p class="stat-card__label">городов за год</p>
+          <span class="stat-card__tooltip" id="stat-tip-4" role="tooltip">Питер, Пушкин, Москва, Сочи, Калининград и Китай. Хайлар и Гуанчжоу считаем одним пунктом. Возможно, о каких-то поездках мы просто не знаем.</span>
+        </div>
+
+        <div class="stat-card" data-fx="rise">
+          <div class="stat-card__top">
+            <span class="stat-card__value">177</span>
+            <button class="stat-card__info" type="button" aria-label="Пояснение" aria-describedby="stat-tip-5">?</button>
+          </div>
+          <p class="stat-card__label">сообщений за сутки</p>
+          <span class="stat-card__tooltip" id="stat-tip-5" role="tooltip">20.04.2026 — день отчёта о Сочи. Егор в тот день, кажется, просто читал.</span>
+        </div>
+
+        <div class="stat-card" data-fx="rise">
+          <div class="stat-card__top">
+            <span class="stat-card__value">20</span>
+            <button class="stat-card__info" type="button" aria-label="Пояснение" aria-describedby="stat-tip-6">?</button>
+          </div>
+          <p class="stat-card__label">лет Володе</p>
+          <span class="stat-card__tooltip" id="stat-tip-6" role="tooltip">7 ноября 2026-го уровень 19 закрыт. Впереди — двадцатый.</span>
+        </div>
+      </div>
+
+      <div class="stats__notes" data-fx="rise">
+        <div class="stats__notes-head">
+          <p class="stats__notes-kicker">Расшифровка</p>
+          <p class="stats__notes-lead">Коротко о том, откуда взялись числа.</p>
+        </div>
+        <div class="stats__notes-grid">
+          <p><span>Архив</span>12 000 сообщений с 1 октября 2025 года.</p>
+          <p><span>Летопись</span>29 событий — все записи хронологии.</p>
+          <p><span>География</span>6+ городов: Питер, Пушкин, Москва, Сочи, Калининград, Китай. Возможно, о каких-то поездках мы просто не знаем.</p>
+        </div>
+        <p class="stats__notes-foot">Дружба старше архива, а 7 ноября 2026-го уровень 19 официально закрыт.</p>
+      </div>
+    </section>
+
+    <!-- Статистика: лексикон -->
+    <section class="section stats stats--words">
+      <div class="section__head" data-fx="rise">
+        <h2 class="section__title">Лексикон</h2>
+        <p class="section__lead">Шесть слов, которые звучали в переписке чаще всего. Без купюр.</p>
+      </div>
+
+      <div class="stats__grid stats__grid--words">
+        <div class="stat-card stat-card--top" data-fx="rise">
+          <span class="stat-card__badge">чаще всего</span>
+          <span class="stat-card__value">115</span>
+          <p class="stat-card__label">ебать</p>
+        </div>
+
+        <div class="stat-card" data-fx="rise">
+          <span class="stat-card__value">108</span>
+          <p class="stat-card__label">бля</p>
+        </div>
+
+        <div class="stat-card" data-fx="rise">
+          <span class="stat-card__value">43</span>
+          <p class="stat-card__label">нахуй</p>
+        </div>
+
+        <div class="stat-card" data-fx="rise">
+          <span class="stat-card__value">19</span>
+          <p class="stat-card__label">хуйня</p>
+        </div>
+
+        <div class="stat-card" data-fx="rise">
+          <span class="stat-card__value">16</span>
+          <p class="stat-card__label">пиздец</p>
+        </div>
+
+        <div class="stat-card" data-fx="rise">
+          <span class="stat-card__value">10</span>
+          <p class="stat-card__label">сука</p>
+        </div>
+      </div>
+
+      <div class="stats__words-summary" data-fx="rise">
+        <p class="stats__words-line">За год — <strong>323</strong> матерных слова. В среднем одно на каждые <strong>14</strong> сообщений — образец сдержанности.</p>
+        <blockquote class="stats__quote">Интересно: «ебать» победил «бля» со счётом 115:108 — год выдался эмоциональный.</blockquote>
+      </div>
+    </section>
+
+    <!-- Хронология -->
+    <section class="section timeline">
+      <div class="section__head" data-fx="rise">
+        <h2 class="section__title">Год в событиях</h2>
+        <p class="section__lead">Хроника уровня 19 → 20. Собрана по 12 000 сообщений — и всё равно это только часть истории.</p>
+      </div>
+      <p class="timeline__legend">Яркая точка — важное событие. Тусклая — просто грех не упомянуть.</p>
+
+      <div class="timeline__list">
+
+        <!-- Ноябрь 2026 -->
+        <div class="tl-group">
+          <header class="tl-group__head" data-fx="rise">
+            <span class="tl-group__marker" aria-hidden="true"></span>
+            <h3 class="tl-group__title">Ноябрь 2026</h3>
+          </header>
+
+          <article class="tl-event tl-event--major">
+            <span class="tl-event__dot" aria-hidden="true"></span>
+            <div class="tl-event__card" data-fx="rise">
+              <div class="tl-event__body">
+                <p class="tl-event__date">7 ноября</p>
+                <h4 class="tl-event__title">LEVEL UP TO 20</h4>
+                <p class="tl-event__text">Год уровня 19 закрыт. Впереди — двадцать. Продолжение следует.</p>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <!-- Октябрь 2026 -->
+        <div class="tl-group">
+          <header class="tl-group__head" data-fx="rise">
+            <span class="tl-group__marker" aria-hidden="true"></span>
+            <h3 class="tl-group__title">Октябрь 2026</h3>
+          </header>
+
+          <article class="tl-event tl-event--major">
+            <span class="tl-event__dot" aria-hidden="true"></span>
+            <div class="tl-event__card" data-fx="rise">
+              <div class="tl-event__body">
+                <p class="tl-event__date">21–22 октября</p>
+                <h4 class="tl-event__title">Алина и Пушкин</h4>
+                <p class="tl-event__text">«Как вообще так совпало, что её зовут Алина» — а в 00:06 Егору уходит «Признание» Пушкина целиком. Романтик.</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="tl-event">
+            <span class="tl-event__dot" aria-hidden="true"></span>
+            <div class="tl-event__card" data-fx="rise">
+              <div class="tl-event__body">
+                <p class="tl-event__date">9 октября</p>
+                <h4 class="tl-event__title">Дом мечты и «Чикаго»</h4>
+                <p class="tl-event__text">«Там буквально дом моей мечты» — речь, мастерство, баня «для наблюдения за физическими ощущениями», вечером красное вино и мюзикл.</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="tl-event tl-event--minor">
+            <span class="tl-event__dot" aria-hidden="true"></span>
+            <div class="tl-event__card" data-fx="rise">
+              <div class="tl-event__body">
+                <p class="tl-event__date">3 октября</p>
+                <h4 class="tl-event__title">Формула свободы</h4>
+                <p class="tl-event__text">«Свобода — это возможность выбирать, в чём себя ограничивать».</p>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <!-- Сентябрь 2026 -->
+        <div class="tl-group">
+          <header class="tl-group__head" data-fx="rise">
+            <span class="tl-group__marker" aria-hidden="true"></span>
+            <h3 class="tl-group__title">Сентябрь 2026</h3>
+          </header>
+
+          <article class="tl-event tl-event--major">
+            <span class="tl-event__dot" aria-hidden="true"></span>
+            <div class="tl-event__card" data-fx="rise">
+              <div class="tl-event__body">
+                <p class="tl-event__date">1 сентября</p>
+                <h4 class="tl-event__title">Новая учёба</h4>
+                <p class="tl-event__text">«Теперь у меня учёба. В игрушки не играю. Хотя не факт, что смогу сдержаться».</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="tl-event tl-event--major">
+            <span class="tl-event__dot" aria-hidden="true"></span>
+            <div class="tl-event__card" data-fx="rise">
+              <div class="tl-event__body">
+                <p class="tl-event__date">23 сентября</p>
+                <h4 class="tl-event__title">Чердак для друга</h4>
+                <p class="tl-event__text">Никиту выселяют из гостиницы — Володя предлагает комнату на чердаке в Пушкине и работу в ресторане рядом: «Хотя бы не безработный программист».</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="tl-event tl-event--minor">
+            <span class="tl-event__dot" aria-hidden="true"></span>
+            <div class="tl-event__card" data-fx="rise">
+              <div class="tl-event__body">
+                <p class="tl-event__date">28 сентября</p>
+                <h4 class="tl-event__title">Мастер приехал</h4>
+                <p class="tl-event__text">«К нам приехала мастер, и теперь я вообще беспомощный».</p>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <!-- Август 2026 -->
+        <div class="tl-group">
+          <header class="tl-group__head" data-fx="rise">
+            <span class="tl-group__marker" aria-hidden="true"></span>
+            <h3 class="tl-group__title">Август 2026</h3>
+          </header>
+
+          <article class="tl-event tl-event--major">
+            <span class="tl-event__dot" aria-hidden="true"></span>
+            <div class="tl-event__card" data-fx="rise">
+              <div class="tl-event__body">
+                <p class="tl-event__date">конец июля — 18 августа</p>
+                <h4 class="tl-event__title">Китай</h4>
+                <p class="tl-event__text">Рынки компьютерного железа, 20 тысяч шагов за геймпадом, сок за десять рублей и «Привет, немытая Россия» на обратном пути. Резюме: Поднебесная разобрана.</p>
+              </div>
+              <div class="tl-event__media tl-event__media--wide"><img class="tl-event__photo" src="assets/photos/china-event.jpg" width="1000" height="450" alt="Володя в Китае"></div>
+            </div>
+          </article>
+
+          <article class="tl-event">
+            <span class="tl-event__dot" aria-hidden="true"></span>
+            <div class="tl-event__card" data-fx="rise">
+              <div class="tl-event__body">
+                <p class="tl-event__date">19–20 августа</p>
+                <h4 class="tl-event__title">Встреча с Егором</h4>
+                <p class="tl-event__text">ДК, библиотека и расшифровка «последнего звонка» — наконец-то вживую.</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="tl-event tl-event--minor">
+            <span class="tl-event__dot" aria-hidden="true"></span>
+            <div class="tl-event__card" data-fx="rise">
+              <div class="tl-event__body">
+                <p class="tl-event__date">30 августа</p>
+                <h4 class="tl-event__title">Цифра «20»</h4>
+                <p class="tl-event__text">«Надо пойти на мастер-класс по брелочкам и сделать такую цифру».</p>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <!-- Июль 2026 -->
+        <div class="tl-group">
+          <header class="tl-group__head" data-fx="rise">
+            <span class="tl-group__marker" aria-hidden="true"></span>
+            <h3 class="tl-group__title">Июль 2026</h3>
+          </header>
+
+          <article class="tl-event">
+            <span class="tl-event__dot" aria-hidden="true"></span>
+            <div class="tl-event__card" data-fx="rise">
+              <div class="tl-event__body">
+                <p class="tl-event__date">8 июля</p>
+                <h4 class="tl-event__title">Калининград</h4>
+                <p class="tl-event__text">Ураган, циклон, «по вайбу Питер», автобусы по 38 рублей — и билет на самолёт уже куплен.</p>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <!-- Июнь 2026 -->
+        <div class="tl-group">
+          <header class="tl-group__head" data-fx="rise">
+            <span class="tl-group__marker" aria-hidden="true"></span>
+            <h3 class="tl-group__title">Июнь 2026</h3>
+          </header>
+
+          <article class="tl-event tl-event--major">
+            <span class="tl-event__dot" aria-hidden="true"></span>
+            <div class="tl-event__card" data-fx="rise">
+              <div class="tl-event__body">
+                <p class="tl-event__date">11 июня</p>
+                <h4 class="tl-event__title">Диплом и Москва</h4>
+                <p class="tl-event__text">«Чуть не завалился на защите, но успел» — и сразу в Москву: Арбат, Красная площадь, книжный с матерящимся консультантом.</p>
+              </div>
+              <div class="tl-event__media"><div class="tl-event__media-inner" data-fx="drift" data-speed="-0.09"></div></div>
+            </div>
+          </article>
+
+          <article class="tl-event">
+            <span class="tl-event__dot" aria-hidden="true"></span>
+            <div class="tl-event__card" data-fx="rise">
+              <div class="tl-event__body">
+                <p class="tl-event__date">начало июня</p>
+                <h4 class="tl-event__title">ЕГЭ и первый тур</h4>
+                <p class="tl-event__text">Литература сдана, а через три дня — первый тур у Ильинского. Всё по плану.</p>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <!-- Май 2026 -->
+        <div class="tl-group">
+          <header class="tl-group__head" data-fx="rise">
+            <span class="tl-group__marker" aria-hidden="true"></span>
+            <h3 class="tl-group__title">Май 2026</h3>
+          </header>
+
+          <article class="tl-event tl-event--major">
+            <span class="tl-event__dot" aria-hidden="true"></span>
+            <div class="tl-event__card" data-fx="rise">
+              <div class="tl-event__body">
+                <p class="tl-event__date">24 мая</p>
+                <h4 class="tl-event__title">Первый тур в РГИСИ</h4>
+                <p class="tl-event__text">«Меня на первый тур в РГИСИ к Ильину пропустили».</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="tl-event">
+            <span class="tl-event__dot" aria-hidden="true"></span>
+            <div class="tl-event__card" data-fx="rise">
+              <div class="tl-event__body">
+                <p class="tl-event__date">31 мая</p>
+                <h4 class="tl-event__title">Ямбы за час</h4>
+                <p class="tl-event__text">«За час научился определять ямбы, хореи, дактили, амфибрахии и анапесты». И философия: «Найдёшь болт — вся жизнь перевернётся».</p>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <!-- Апрель 2026 -->
+        <div class="tl-group">
+          <header class="tl-group__head" data-fx="rise">
+            <span class="tl-group__marker" aria-hidden="true"></span>
+            <h3 class="tl-group__title">Апрель 2026</h3>
+          </header>
+
+          <article class="tl-event tl-event--major">
+            <span class="tl-event__dot" aria-hidden="true"></span>
+            <div class="tl-event__card" data-fx="rise">
+              <div class="tl-event__body">
+                <p class="tl-event__date">18–21 апреля</p>
+                <h4 class="tl-event__title">Я-Фест в Сочи</h4>
+                <p class="tl-event__text">Полицаи у дома, цилиндр в кювете, фен по имени Валера, прослушивание у мастеров РГИСИ и караоке с Дядей Мишей.</p>
+              </div>
+              <div class="tl-event__media"><div class="tl-event__media-inner" data-fx="drift" data-speed="0.1"></div></div>
+            </div>
+          </article>
+
+          <article class="tl-event tl-event--minor">
+            <span class="tl-event__dot" aria-hidden="true"></span>
+            <div class="tl-event__card" data-fx="rise">
+              <div class="tl-event__body">
+                <p class="tl-event__date">2 апреля</p>
+                <h4 class="tl-event__title">«За слова не отвечаю»</h4>
+                <p class="tl-event__text">«Потому что их не помню».</p>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <!-- Март 2026 -->
+        <div class="tl-group">
+          <header class="tl-group__head" data-fx="rise">
+            <span class="tl-group__marker" aria-hidden="true"></span>
+            <h3 class="tl-group__title">Март 2026</h3>
+          </header>
+
+          <article class="tl-event">
+            <span class="tl-event__dot" aria-hidden="true"></span>
+            <div class="tl-event__card" data-fx="rise">
+              <div class="tl-event__body">
+                <p class="tl-event__date">31 марта</p>
+                <h4 class="tl-event__title">ТикТок удалён</h4>
+                <p class="tl-event__text">«Последняя частичка цивилизованного мира. Фридом».</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="tl-event tl-event--minor">
+            <span class="tl-event__dot" aria-hidden="true"></span>
+            <div class="tl-event__card" data-fx="rise">
+              <div class="tl-event__body">
+                <p class="tl-event__date">21 марта</p>
+                <h4 class="tl-event__title">Книжный марафон</h4>
+                <p class="tl-event__text">«Меня Яндекс Книги умоляют отдохнуть».</p>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <!-- Февраль 2026 -->
+        <div class="tl-group">
+          <header class="tl-group__head" data-fx="rise">
+            <span class="tl-group__marker" aria-hidden="true"></span>
+            <h3 class="tl-group__title">Февраль 2026</h3>
+          </header>
+
+          <article class="tl-event">
+            <span class="tl-event__dot" aria-hidden="true"></span>
+            <div class="tl-event__card" data-fx="rise">
+              <div class="tl-event__body">
+                <p class="tl-event__date">6 февраля</p>
+                <h4 class="tl-event__title">Скрипка</h4>
+                <p class="tl-event__text">«Лови эту тупую скрипку» — методичка на восемь пунктов: спина, кисть, локоть, смычок. «Кузнечика выучу — удивишься».</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="tl-event">
+            <span class="tl-event__dot" aria-hidden="true"></span>
+            <div class="tl-event__card" data-fx="rise">
+              <div class="tl-event__body">
+                <p class="tl-event__date">28 февраля</p>
+                <h4 class="tl-event__title">«Чёрный человек»</h4>
+                <p class="tl-event__text">Выучил Есенина целиком и сбросил Никите — заготовка для прослушиваний.</p>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <!-- Январь 2026 -->
+        <div class="tl-group">
+          <header class="tl-group__head" data-fx="rise">
+            <span class="tl-group__marker" aria-hidden="true"></span>
+            <h3 class="tl-group__title">Январь 2026</h3>
+          </header>
+
+          <article class="tl-event">
+            <span class="tl-event__dot" aria-hidden="true"></span>
+            <div class="tl-event__card" data-fx="rise">
+              <div class="tl-event__body">
+                <p class="tl-event__date">13 января</p>
+                <h4 class="tl-event__title">Стих для ветеранов</h4>
+                <p class="tl-event__text">Ищет стихотворение, чтобы читать его ветеранам в день освобождения блокады Ленинграда.</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="tl-event tl-event--minor">
+            <span class="tl-event__dot" aria-hidden="true"></span>
+            <div class="tl-event__card" data-fx="rise">
+              <div class="tl-event__body">
+                <p class="tl-event__date">31 января</p>
+                <h4 class="tl-event__title">Театральная тусовка</h4>
+                <p class="tl-event__text">«Мои любимки все» — дома в 3:20, утром на работу.</p>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <!-- Декабрь 2025 -->
+        <div class="tl-group">
+          <header class="tl-group__head" data-fx="rise">
+            <span class="tl-group__marker" aria-hidden="true"></span>
+            <h3 class="tl-group__title">Декабрь 2025</h3>
+          </header>
+
+          <article class="tl-event tl-event--minor">
+            <span class="tl-event__dot" aria-hidden="true"></span>
+            <div class="tl-event__card" data-fx="rise">
+              <div class="tl-event__body">
+                <p class="tl-event__date">14 декабря</p>
+                <h4 class="tl-event__title">Отчёт по практике</h4>
+                <p class="tl-event__text">Uno Cafe в Павловске: складская логистика, ХАССП, товарное соседство. «Поймал хандру лютую».</p>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <!-- Ноябрь 2025 -->
+        <div class="tl-group">
+          <header class="tl-group__head" data-fx="rise">
+            <span class="tl-group__marker" aria-hidden="true"></span>
+            <h3 class="tl-group__title">Ноябрь 2025</h3>
+          </header>
+
+          <article class="tl-event">
+            <span class="tl-event__dot" aria-hidden="true"></span>
+            <div class="tl-event__card" data-fx="rise">
+              <div class="tl-event__body">
+                <p class="tl-event__date">24 ноября</p>
+                <h4 class="tl-event__title">ДР Никиты</h4>
+                <p class="tl-event__text">Поздравление в 00:47: «Я бы написал в 00:00, но я залип в тиктоке».</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="tl-event tl-event--minor">
+            <span class="tl-event__dot" aria-hidden="true"></span>
+            <div class="tl-event__card" data-fx="rise">
+              <div class="tl-event__body">
+                <p class="tl-event__date">10 ноября</p>
+                <h4 class="tl-event__title">Фэнтези-сценка</h4>
+                <p class="tl-event__text">2229 символов про алхимика, таверну и загадочного Магнуса.</p>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <!-- Октябрь 2025 -->
+        <div class="tl-group">
+          <header class="tl-group__head" data-fx="rise">
+            <span class="tl-group__marker" aria-hidden="true"></span>
+            <h3 class="tl-group__title">Октябрь 2025</h3>
+          </header>
+
+          <article class="tl-event">
+            <span class="tl-event__dot" aria-hidden="true"></span>
+            <div class="tl-event__card" data-fx="rise">
+              <div class="tl-event__body">
+                <p class="tl-event__date">1 октября</p>
+                <h4 class="tl-event__title">Начало летописи</h4>
+                <p class="tl-event__text">«Все. Интернет отключили. Ограничили доступ, так сказать».</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="tl-event tl-event--minor">
+            <span class="tl-event__dot" aria-hidden="true"></span>
+            <div class="tl-event__card" data-fx="rise">
+              <div class="tl-event__body">
+                <p class="tl-event__date">2 октября</p>
+                <h4 class="tl-event__title">«Как в Интерстелларе»</h4>
+                <p class="tl-event__text">«Сижу в стенах и ничего не могу сказать».</p>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <!-- До летописи -->
+        <div class="tl-group">
+          <header class="tl-group__head" data-fx="rise">
+            <span class="tl-group__marker" aria-hidden="true"></span>
+            <h3 class="tl-group__title">До летописи</h3>
+          </header>
+
+          <article class="tl-event">
+            <span class="tl-event__dot" aria-hidden="true"></span>
+            <div class="tl-event__card" data-fx="rise">
+              <div class="tl-event__body">
+                <p class="tl-event__date">1 октября 2025</p>
+                <h4 class="tl-event__title">Первое сообщение</h4>
+                <p class="tl-event__text">«Привет, ты кто?» — начало сохранившегося архива. Дружба старше любого экспорта переписки.</p>
+              </div>
+            </div>
+          </article>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Дневник наблюдений -->
+    <section class="section almanac">
+      <div class="section__head" data-fx="rise">
+        <h2 class="section__title">Дневник наблюдений</h2>
+        <p class="section__lead">Мелкие привычки, большие странности и один удалённый TikTok.</p>
+      </div>
+
+      <div class="almanac__panel" data-fx="rise">
+        <div class="almanac__item">
+          <span class="almanac__value">346</span>
+          <div class="almanac__body">
+            <p class="almanac__title">сообщений КАПСОМ</p>
+            <p class="almanac__text">Периодически орёт.</p>
+          </div>
+        </div>
+
+        <div class="almanac__item">
+          <span class="almanac__value almanac__value--time">01:00 / 00:00</span>
+          <div class="almanac__body">
+            <p class="almanac__title">часы смеха</p>
+            <p class="almanac__text">Ржёт по ночам.</p>
+          </div>
+        </div>
+
+        <div class="almanac__item">
+          <span class="almanac__value">2 593</span>
+          <div class="almanac__body">
+            <p class="almanac__title">скобочки «)))))))))»</p>
+            <p class="almanac__text">Улыбался в 55% всех сообщений.</p>
+          </div>
+        </div>
+
+        <div class="almanac__item">
+          <span class="almanac__value">2 «р»</span>
+          <div class="almanac__body">
+            <p class="almanac__title">«Литеррали»</p>
+            <p class="almanac__text">Авторское написание, с двумя «р».</p>
+          </div>
+        </div>
+
+        <div class="almanac__item">
+          <span class="almanac__value">5 дней</span>
+          <div class="almanac__body">
+            <p class="almanac__title">самое долгое молчание</p>
+            <p class="almanac__text">И таких пауз за год набралось целых семь.</p>
+          </div>
+        </div>
+
+        <div class="almanac__item">
+          <span class="almanac__value">20 / 35</span>
+          <div class="almanac__body">
+            <p class="almanac__title">«завтра» / «щас»</p>
+            <p class="almanac__text">Философ откладывания.</p>
+          </div>
+        </div>
+
+        <div class="almanac__item">
+          <span class="almanac__value">1 / 10</span>
+          <div class="almanac__body">
+            <p class="almanac__title">удалил TikTok / упоминаний</p>
+            <p class="almanac__text">Скучал по нему: 10 упоминаний в переписке.</p>
+          </div>
+        </div>
+
+        <div class="almanac__item">
+          <span class="almanac__value">5</span>
+          <div class="almanac__body">
+            <p class="almanac__title">вариантов имени для Никиты</p>
+            <p class="almanac__text">Никитос ×17, Никита ×7, Никиточка, Никитосик, Никитооос.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Яркие моменты / альбом -->
+    <section class="section moments">
+      <div class="section__head" data-fx="rise">
+        <h2 class="section__title">Яркие моменты</h2>
+        <p class="section__lead">День рождения и семейный архив Володи — фотографии, которые хочется сохранить.</p>
+      </div>
+      <div class="moments__grid">
+        <figure class="moment"><img src="assets/photos/photo-01.jpg" width="600" height="900" alt="Фото из семейного архива"></figure>
+        <figure class="moment"><img src="assets/photos/photo-02.jpg" width="675" height="900" alt="Фото из семейного архива"></figure>
+        <figure class="moment"><img src="assets/photos/photo-03.jpg" width="900" height="675" alt="Фото из семейного архива"></figure>
+        <figure class="moment"><img src="assets/photos/photo-04.jpg" width="675" height="900" alt="Фото из семейного архива"></figure>
+        <figure class="moment"><img src="assets/photos/photo-05.jpg" width="675" height="900" alt="Фото из семейного архива"></figure>
+        <figure class="moment"><img src="assets/photos/photo-06.jpg" width="675" height="900" alt="Фото из семейного архива"></figure>
+        <figure class="moment"><img src="assets/photos/photo-07.jpg" width="675" height="900" alt="Фото из семейного архива"></figure>
+        <figure class="moment"><img src="assets/photos/photo-08.jpg" width="670" height="900" alt="Фото из семейного архива"></figure>
+        <figure class="moment"><img src="assets/photos/photo-09.jpg" width="678" height="900" alt="Фото из семейного архива"></figure>
+        <figure class="moment"><img src="assets/photos/photo-10.jpg" width="675" height="900" alt="Фото из семейного архива"></figure>
+        <figure class="moment"><img src="assets/photos/photo-11.jpg" width="675" height="900" alt="Фото из семейного архива"></figure>
+        <figure class="moment"><img src="assets/photos/photo-12.jpg" width="675" height="900" alt="Фото из семейного архива"></figure>
+        <figure class="moment"><img src="assets/photos/photo-13.jpg" width="900" height="675" alt="Фото из семейного архива"></figure>
+        <figure class="moment"><img src="assets/photos/photo-14.jpg" width="900" height="405" alt="Фото из семейного архива"></figure>
+        <figure class="moment"><img src="assets/photos/photo-15.jpg" width="675" height="900" alt="Фото из семейного архива"></figure>
+        <figure class="moment"><img src="assets/photos/photo-16.jpg" width="900" height="675" alt="Фото из семейного архива"></figure>
+        <figure class="moment"><img src="assets/photos/photo-17.jpg" width="900" height="675" alt="Фото из семейного архива"></figure>
+        <figure class="moment"><img src="assets/photos/photo-18.jpg" width="900" height="675" alt="Фото из семейного архива"></figure>
+        <figure class="moment"><img src="assets/photos/photo-19.jpg" width="900" height="628" alt="Фото из семейного архива"></figure>
+        <figure class="moment"><img src="assets/photos/photo-20.jpg" width="615" height="900" alt="Фото из семейного архива"></figure>
+      </div>
+    </section>
+
+    <!-- Над сайтом работали -->
+    <section class="section team">
+      <div class="section__head" data-fx="rise">
+        <h2 class="section__title">Над сайтом работали</h2>
+        <p class="section__lead">Четыре человека, без которых этого бы не было.</p>
+      </div>
+
+      <div class="team__grid">
+        <article class="team-card" data-fx="rise">
+          <div class="team__photo" role="img" aria-label="Плейсхолдер фото: Никита">
+            <span aria-hidden="true">Н</span>
+          </div>
+          <h3 class="team__name">Никита</h3>
+          <p class="team__role">Код, тексты, сборка</p>
+          <p class="team__text">Придумал, собрал и довёл до состояния «почти готово». Знает, где лежит каждый баг, и делает вид, что так и задумано.</p>
+        </article>
+
+        <article class="team-card" data-fx="rise">
+          <div class="team__photo" role="img" aria-label="Плейсхолдер фото: Егор">
+            <span aria-hidden="true">Е</span>
+          </div>
+          <h3 class="team__name">Егор</h3>
+          <p class="team__role">Валидатор, судья, император, эль презеденте, король на руинах</p>
+          <p class="team__text">Следил за качеством, выносил вердикты и не давал руинам окончательно рассыпаться.</p>
+        </article>
+
+        <article class="team-card" data-fx="rise">
+          <div class="team__photo" role="img" aria-label="Плейсхолдер фото: Володя">
+            <span aria-hidden="true">В</span>
+          </div>
+          <h3 class="team__name">Володя</h3>
+          <p class="team__role">Вдохновитель</p>
+          <p class="team__text">Виновник торжества и главный источник вдохновения. Без него не было бы ни повода, ни сайта.</p>
+        </article>
+
+        <article class="team-card" data-fx="rise">
+          <div class="team__photo" role="img" aria-label="Плейсхолдер фото: DeepSeek">
+            <span aria-hidden="true">DS</span>
+          </div>
+          <h3 class="team__name">DeepSeek</h3>
+          <p class="team__role">Исполнитель</p>
+          <p class="team__text">Писал код, слушал правки и превращал «давай ещё чуть-чуть» в рабочую версию.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Финал -->
+    <section class="finale">
+      <div class="finale__angels">
+        <img class="finale__angel finale__angel--left" src="assets/angels/angel-left.gif" alt="" role="button" tabindex="0" aria-label="Ангел, нажми на него" draggable="false">
+        <img class="finale__angel finale__angel--right" src="assets/angels/angel-right.gif" alt="" role="button" tabindex="0" aria-label="Ангел, нажми на него" draggable="false">
+      </div>
+
+      <div class="finale__inner" data-fx="rise">
+        <p class="finale__eyebrow">7 ноября 2026 · двадцатый уровень</p>
+        <h2 class="finale__title">A bit closer to Heaven, Володя</h2>
+        <p class="finale__sub">Мы искренне желаем тебе добиться успехов во всём за что ты берёшься!</p>
+      </div>
+      <canvas class="confetti" id="confetti" aria-hidden="true"></canvas>
+    </section>
+
+    <!-- Переход к ачивкам -->
+    <section class="finish">
+      <button class="finale__btn finish__btn" type="button" id="finish-btn">Закончить</button>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <p class="footer__text">Собрано из переписки, картинок и упрямства · 2026</p>
+  </footer>
+
+  <!-- Два крестика всегда по краям экрана -->
+  <div class="screen-crosses" aria-hidden="true">
+    <img class="screen-cross screen-cross--left" src="assets/crosses/ornate.gif" alt="">
+    <img class="screen-cross screen-cross--right" src="assets/crosses/jewel.gif" alt="">
+  </div>
+
+  <!-- Орнаментальная рамка по краям экрана -->
+  <div class="page-frame" aria-hidden="true">
+    <span class="page-frame__corner page-frame__corner--bl"></span>
+    <span class="page-frame__corner page-frame__corner--br"></span>
+    <span class="page-frame__corner page-frame__corner--tl"></span>
+    <span class="page-frame__corner page-frame__corner--tr"></span>
+  </div>
+
+  <!-- Перетаскиваемая свеча -->
+  <div class="candle-layer" aria-hidden="true">
+    <span class="hero__candle"></span>
+  </div>
+
+  <!-- Экран ачивок -->
+  <section class="achievements-screen" id="achievements-screen" role="dialog" aria-modal="true" aria-labelledby="achievements-title" aria-hidden="true" tabindex="-1">
+    <button class="achievements-screen__x" type="button" data-achievements-close aria-label="Закрыть экран ачивок">×</button>
+
+    <div class="achievements-screen__inner">
+      <header class="achievements-screen__head">
+        <p class="achievements-screen__eyebrow">7 ноября 2026 · итоги</p>
+        <h2 class="achievements-screen__title" id="achievements-title">Ачивки</h2>
+        <p class="achievements-screen__lead">Здесь только то, что действительно случилось. Остальное осталось чёрным.</p>
+        <p class="achievements-screen__count">
+          <strong><span data-achievements-count>0</span> / <span data-achievements-total>11</span></strong>
+          <span>открыто</span>
+        </p>
+      </header>
+
+      <div class="achievements__grid">
+        <article class="achievement" data-achievement="allAngels">
+          <div class="achievement__badge" aria-hidden="true">
+            <span class="achievement__badge-icon">✝</span>
+            <span class="achievement__badge-check">✓</span>
+          </div>
+          <div class="achievement__body">
+            <p class="achievement__kicker">Секретная ачивка</p>
+            <h3 class="achievement__title">Убийство всех Ангелов</h3>
+            <p class="achievement__text">Убить всех ангелов: двух в финале и всех глазастых, что летают по документу.</p>
+          </div>
+          <p class="achievement__state" data-achievement-state>открыта</p>
+          <div class="achievement__veil" aria-hidden="true">
+            <img class="achievement__veil-img" src="assets/achievements/hidden-2.gif" alt="">
+          </div>
+        </article>
+
+        <article class="achievement" data-achievement="allMushrooms">
+          <div class="achievement__badge" aria-hidden="true">
+            <img class="achievement__badge-img" src="assets/mushrooms/mushroom.png" alt="">
+            <span class="achievement__badge-check">✓</span>
+          </div>
+          <div class="achievement__body">
+            <p class="achievement__kicker">Секретная ачивка</p>
+            <h3 class="achievement__title">Убийство всех Грибов</h3>
+            <p class="achievement__text">Убить все грибы: и наземные, и крылатые.</p>
+          </div>
+          <p class="achievement__state" data-achievement-state>открыта</p>
+          <div class="achievement__veil" aria-hidden="true">
+            <img class="achievement__veil-img" src="assets/achievements/hidden-2.gif" alt="">
+          </div>
+        </article>
+
+        <article class="achievement" data-achievement="allFlowers">
+          <div class="achievement__badge" aria-hidden="true">
+            <img class="achievement__badge-img" src="assets/flowers/flower-2.png" alt="">
+            <span class="achievement__badge-check">✓</span>
+          </div>
+          <div class="achievement__body">
+            <p class="achievement__kicker">Секретная ачивка</p>
+            <h3 class="achievement__title">Убийство всех Цветов</h3>
+            <p class="achievement__text">Уничтожить все цветы. Ни одного лепестка не осталось.</p>
+          </div>
+          <p class="achievement__state" data-achievement-state>открыта</p>
+          <div class="achievement__veil" aria-hidden="true">
+            <img class="achievement__veil-img" src="assets/achievements/hidden-2.gif" alt="">
+          </div>
+        </article>
+
+        <article class="achievement" data-achievement="all">
+          <div class="achievement__badge" aria-hidden="true">
+            <span class="achievement__badge-icon">☠</span>
+            <span class="achievement__badge-check">✓</span>
+          </div>
+          <div class="achievement__body">
+            <p class="achievement__kicker">Секретная ачивка</p>
+            <h3 class="achievement__title">Убийство Всех</h3>
+            <p class="achievement__text">Убито всё живое на странице. Абсолютная зачистка.</p>
+          </div>
+          <p class="achievement__state" data-achievement-state>открыта</p>
+          <div class="achievement__veil" aria-hidden="true">
+            <img class="achievement__veil-img" src="assets/achievements/hidden-2.gif" alt="">
+          </div>
+        </article>
+
+        <article class="achievement" data-achievement="none">
+          <div class="achievement__badge" aria-hidden="true">
+            <span class="achievement__badge-icon">∅</span>
+            <span class="achievement__badge-check">✓</span>
+          </div>
+          <div class="achievement__body">
+            <p class="achievement__kicker">Секретная ачивка</p>
+            <h3 class="achievement__title">Никто не убит</h3>
+            <p class="achievement__text">Не убит никто. Ты просто дошёл до конца и нажал «Закончить».</p>
+          </div>
+          <p class="achievement__state" data-achievement-state>открыта</p>
+          <div class="achievement__veil" aria-hidden="true">
+            <img class="achievement__veil-img" src="assets/achievements/hidden-2.gif" alt="">
+          </div>
+        </article>
+
+        <article class="achievement" data-achievement="allButAngels">
+          <div class="achievement__badge" aria-hidden="true">
+            <span class="achievement__badge-icon">✝</span>
+            <span class="achievement__badge-check">✓</span>
+          </div>
+          <div class="achievement__body">
+            <p class="achievement__kicker">Секретная ачивка</p>
+            <h3 class="achievement__title">Убиты все, кроме Ангелов</h3>
+            <p class="achievement__text">Все грибы и цветы мертвы, а ангелы не тронуты.</p>
+          </div>
+          <p class="achievement__state" data-achievement-state>открыта</p>
+          <div class="achievement__veil" aria-hidden="true">
+            <img class="achievement__veil-img" src="assets/achievements/hidden-2.gif" alt="">
+          </div>
+        </article>
+
+        <article class="achievement" data-achievement="allButMushrooms">
+          <div class="achievement__badge" aria-hidden="true">
+            <img class="achievement__badge-img" src="assets/mushrooms/mushroom.png" alt="">
+            <span class="achievement__badge-check">✓</span>
+          </div>
+          <div class="achievement__body">
+            <p class="achievement__kicker">Секретная ачивка</p>
+            <h3 class="achievement__title">Убиты все, кроме Грибов</h3>
+            <p class="achievement__text">Все ангелы и цветы мертвы, а грибы не тронуты.</p>
+          </div>
+          <p class="achievement__state" data-achievement-state>открыта</p>
+          <div class="achievement__veil" aria-hidden="true">
+            <img class="achievement__veil-img" src="assets/achievements/hidden-2.gif" alt="">
+          </div>
+        </article>
+
+        <article class="achievement" data-achievement="allButFlowers">
+          <div class="achievement__badge" aria-hidden="true">
+            <img class="achievement__badge-img" src="assets/flowers/flower-2.png" alt="">
+            <span class="achievement__badge-check">✓</span>
+          </div>
+          <div class="achievement__body">
+            <p class="achievement__kicker">Секретная ачивка</p>
+            <h3 class="achievement__title">Убиты все, кроме Цветов</h3>
+            <p class="achievement__text">Все ангелы и грибы мертвы, а цветы не тронуты.</p>
+          </div>
+          <p class="achievement__state" data-achievement-state>открыта</p>
+          <div class="achievement__veil" aria-hidden="true">
+            <img class="achievement__veil-img" src="assets/achievements/hidden-2.gif" alt="">
+          </div>
+        </article>
+
+        <article class="achievement" data-achievement="onlyAngels">
+          <div class="achievement__badge" aria-hidden="true">
+            <span class="achievement__badge-icon">✝</span>
+            <span class="achievement__badge-check">✓</span>
+          </div>
+          <div class="achievement__body">
+            <p class="achievement__kicker">Секретная ачивка</p>
+            <h3 class="achievement__title">Убиты только Ангелы</h3>
+            <p class="achievement__text">Все ангелы мертвы, и больше никто не пострадал.</p>
+          </div>
+          <p class="achievement__state" data-achievement-state>открыта</p>
+          <div class="achievement__veil" aria-hidden="true">
+            <img class="achievement__veil-img" src="assets/achievements/hidden-2.gif" alt="">
+          </div>
+        </article>
+
+        <article class="achievement" data-achievement="onlyMushrooms">
+          <div class="achievement__badge" aria-hidden="true">
+            <img class="achievement__badge-img" src="assets/mushrooms/mushroom.png" alt="">
+            <span class="achievement__badge-check">✓</span>
+          </div>
+          <div class="achievement__body">
+            <p class="achievement__kicker">Секретная ачивка</p>
+            <h3 class="achievement__title">Убиты только Грибы</h3>
+            <p class="achievement__text">Все грибы мертвы, и больше никто не пострадал.</p>
+          </div>
+          <p class="achievement__state" data-achievement-state>открыта</p>
+          <div class="achievement__veil" aria-hidden="true">
+            <img class="achievement__veil-img" src="assets/achievements/hidden-2.gif" alt="">
+          </div>
+        </article>
+
+        <article class="achievement" data-achievement="onlyFlowers">
+          <div class="achievement__badge" aria-hidden="true">
+            <img class="achievement__badge-img" src="assets/flowers/flower-2.png" alt="">
+            <span class="achievement__badge-check">✓</span>
+          </div>
+          <div class="achievement__body">
+            <p class="achievement__kicker">Секретная ачивка</p>
+            <h3 class="achievement__title">Убиты только Цветы</h3>
+            <p class="achievement__text">Все цветы мертвы, и больше никто не пострадал.</p>
+          </div>
+          <p class="achievement__state" data-achievement-state>открыта</p>
+          <div class="achievement__veil" aria-hidden="true">
+            <img class="achievement__veil-img" src="assets/achievements/hidden-2.gif" alt="">
+          </div>
+        </article>
+      </div>
+
+      <div class="achievements-screen__foot">
+        <button class="finale__btn achievements-screen__close" type="button" data-achievements-close>Вернуться</button>
+      </div>
+    </div>
+  </section>
+
+  <script src="script.js?v=20261109q"></script>
+</body>
+</html>
+
